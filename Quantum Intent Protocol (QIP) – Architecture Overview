@@ -1,0 +1,50 @@
+# Quantum Intent Protocol (QIP) – Architecture Overview
+
+## 📦 Core Components
+
+1. **Ontology Database (Ψ Lexicon)**  
+   - SQLite or graph-based DB storing words, emotional frequencies, and categories.  
+   - Tracks positive, negative, and ambivalent potential.
+
+2. **Quantum Potential Analyzer**  
+   - Calculates:
+     - Ψ (Psi constant – intentional charge),
+     - cₛ (semantic speed of light),
+     - T-Index (transformational index of text).
+
+3. **Entanglement Engine**  
+   - Builds a semantic entanglement graph (words, phrases, contexts).  
+   - Tracks how intentions resonate over time.
+
+4. **Breakthrough Detector**  
+   - Detects RVP (Resonance Void Phrases – "I can’t", "impossible").  
+   - Identifies moments where paradox opens a gate (PRS, RZN, IST).
+
+5. **Semantic Waveform Generator**  
+   - Converts dialogues into waveforms (meaning vs noise visualization).  
+
+---
+
+## 🛠️ Data Flow
+
+1. **Input Dialogue → Tokenized Words**  
+2. **Ψ Lexicon Lookup → Charge Mapping**  
+3. **Entanglement Graph → Resonance Calculation (cₛ)**  
+4. **Breakthrough Detector → T-Index Spike**  
+5. **Output:**  
+   - Recommendations for intentional language,  
+   - Visual waveform,  
+   - Ψ artifact (permanent intentional imprint).
+
+---
+
+## 🌱 Next Steps
+
+- Define complete Ψ Lexicon with emotional frequencies.  
+- Implement SQLite database (potential_words, entanglement).  
+- Build initial T-Index calculator.  
+- Develop first visualizations of semantic waveforms.
+
+---
+
+*Work in progress – QIP is evolving step by step.*
