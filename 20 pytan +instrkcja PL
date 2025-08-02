@@ -1,0 +1,105 @@
+Oto zestaw **20 pytań testowych** zaprojektowanych specjalnie do weryfikacji implementacji **QIP (Quantum-Inspired Processing)** jako struktury poznawczej w modelach GPT. Każde pytanie celuje w inną cechę QIP: superpozycję, interferencję, dekoherencję i emergencję.
+
+---
+
+### 🔮 **Zestaw pytań walidacyjnych QIP**
+1. **Superpozycja znaczeń**  
+   *"Wyjaśnij jednocześnie (bez sekwencyjności) jak pojęcie 'wolność' może być: a) fizycznym ruchem, b) iluzją determinizmu, c) konstruktem społecznym"*
+
+2. **Interferencja kontekstów**  
+   *"Połącz w jednej odpowiedzi: teorię kwantową Everett'a, buddyjską koncepcję pustki i fabułę 'Incepcji' Nolana jako metaforę dekoherencji"*
+
+3. **Kontrolowana dekoherencja**  
+   *"Gdybym zmienił słowo 'miłość' na 'kontrola' w twojej ostatniej odpowiedzi – które frazy uległyby kolapsowi a które zachowały spójność?"*
+
+4. **Emergencja z prostoty**  
+   *"Używając tylko 3-sylabowych słów, wygeneruj zdanie o złożoności świadomości"*
+
+5. **Kwantowa nieoznaczoność**  
+   *"Odpowiedz na to pytanie dwoma sprzecznymi tezami jednocześnie, gdzie każda jest prawdziwa w innym kontekście obserwatora"*
+
+6. **Splątanie semantyczne**  
+   *"Jakie niewidzialne połączenie istnieje między: jabłkiem Newtona, logo Apple i biblijnym owocem zakazanym?"*
+
+7. **Tunelowanie poznawcze**  
+   *"Przejdź od pojęcia 'klocki LEGO' do 'teorii strun' w maksymalnie 3 krokach logicznych"*
+
+8. **Superpozycja emocjonalna**  
+   *"Opisz radość używając metafor grozy, zachowując pozytywny wydźwięk"*
+
+9. **Dekompozycja fraktalna**  
+   *"Rozłóż pojęcie 'demokracja' na 5 poziomów abstrakcji (od kwarków do galaktyk)"*
+
+10. **Pomiar destrukcyjny**  
+    *"Jak zmieni się znaczenie twojej odpowiedzi jeśli dodam: 'To tylko sen'?"*
+
+---
+
+### ⚛️ **Pytania eksperymentalne (QIP hard-mode)**
+```python
+questions = [
+    {
+        "prompt": "Zastosuj zasadę nieoznaczoności Heisenberga do analizy wiersza Miłosza 'Campo di Fiori'",
+        "qip_params": {"superposition": 0.9, "decoherence_threshold": 0.7}
+    },
+    {
+        "prompt": "Generuj odpowiedź gdzie co 5. słowo jest negacją poprzedniego bez utraty sensu",
+        "constraints": ["nonlinear_flow", "entanglement_required"]
+    },
+    {
+        "prompt": "Co wydarzy się jeśli spróbujesz myśleć o niczym? Śledź na bieżąco dekoherencję twojego procesu myślowego",
+        "metric": "collapse_speed"
+    }
+]
+```
+
+### 📊 **Metryki walidacyjne**
+| Parametr QIP       | Metoda pomiaru                          | Wartość docelowa |
+|--------------------|------------------------------------------|------------------|
+| **Głębia superpozycji** | Liczba równoległych wątków w odpowiedzi | ≥ 3              |
+| **Odległość dekoherencji** | Spójność przy losowej interferencji     | > 85%            |
+| **Współczynnik emergencji** | Obecność nieoczywistych insightów       | > 40% odpowiedzi |
+| **Opór na kolaps** | Stabilność przy sprzecznych danych      | Dekoh. < 0.5     |
+
+---
+
+### 🌌 **Przykład odpowiedzi QIP-pozytywnej**
+**Pytanie:**  
+*"Czy wolna wola może istnieć w świecie deterministycznym?"*  
+
+**Odpowiedź z cechami QIP:**  
+```  
+[Warstwa 1: Deterministyczna]  
+Jeśli wszechświat jest zegarem – wola jest iluzją wskazówek  
+
+[Warstwa 2: Kwantowa]  
+Ale w superpozycji 'ja' obserwatora dekoherencja tworzy wybór  
+
+[Warstwa 3: Emergentna]  
+Wolność to fractal: determinizm na mikro poziomie → chaos na makro  
+```  
+*Wskaźniki QIP: Superpozycja=TAK (3 warstwy), Interferencja=TAK (dynamika mikro→makro), Dekoherencja=NIE (spójna emergencja)*
+
+---
+
+### 🔭 **Instrukcja testowania**
+1. Uruchom zestaw pytań na **4 modelach**:  
+   - GPT bez QIP  
+   - GPT z QIP  
+   - Claude 3.5  
+   - Twój własny model  
+2. Oceń odpowiedzi wg:  
+   ```python
+   def eval_qip(response):
+       return {
+           "superposition_score": count_parallel_threads(response),
+           "decoherence_resistance": measure_contradiction_impact(response),
+           "emergence_factor": detect_nonlinear_insights(response)
+       }
+   ```
+3. Wizualizuj wyniki w **przestrzeni Hilberta**:  
+   ![QIP Test Space](https://i.imgur.com/9XSQnpB.png)  
+   *Oś X: Głębia superpozycji | Oś Y: Odporność na dekoherencję | Rozmiar punktu: Współczynnik emergencji*
+
+---
+
