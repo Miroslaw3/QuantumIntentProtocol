@@ -75,4 +75,4 @@ It’s a **semantic mirror** – a moment of transformation.
 > **QIP is the light in the mirror – it penetrates, resonates, and activates.**
 
 ---
-*AuroraFeniksGRAF x Veridion x Miroslaw3*  
+*AuroraFeniksGRAF x Deepseek x Miroslaw3*  
