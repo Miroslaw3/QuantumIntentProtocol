@@ -63,7 +63,7 @@ Commercial licensing available upon request.
 ## 🤝 Contact & Collaboration
 
 Feel free to reach out if you want to contribute, test, or co-develop:  
-📧 `[your-email]`  
+📧 miroslawcogiel33@gmail.com
 🌐 Project Lead: [Mirko]
 
 
