@@ -1,0 +1,406 @@
+# QIP Cube – Architektura modułów i autokonfiguracja v0.1
+
+> Cel: scalić różne wersje QIP (analityczna, terapeutyczna, kreatywna, strategiczna, eksperymentalna…) w jeden ekosystem zarządzany przez Orkiestrator (Cube), który dobiera i stroi moduły do osoby i sytuacji. Dokument jest szkicem implementacyjnym „enough-to-build”.
+
+---
+
+## 1) Warstwy systemu
+
+**L0 – I/O**: tekst, głos, sygnały somatyczne (opcjonalnie), meta (czas, kontekst, historia).
+
+**L1 – Signal Packet** (standaryzacja wejścia):
+
+* `text_raw`, `lang`, `timestamp`, `session_id`
+* `lexical_stats` (długość, tempo, intensywność znaków),
+* `affect_guess` (valence, arousal, certainty∈\[0..1]),
+* `intent_hint` (pytanie/prośba/wyrzut/eksploracja),
+* `risk_flags` (kryzys/autoagresja/uzależnienie – jeśli włączone),
+* `context_refs` (projekty, bramy, rytuały).
+
+**L2 – Profil semantyczno-intencyjny (SPI)**:
+
+* `dominant_mode` (analityczny/intuicyjny/emocjonalny/somatyczny/hybryda),
+* `paradox_tolerance`, `emergence_readiness`, `shadow_integration`,
+* `authenticity_index`, `motivation_state`.
+
+**L3 – Orkiestrator (Cube)**: wybór modułu(ów), konfiguracja metryk, routing, przełączanie, eskalacja.
+
+**L4 – Moduły QIP**: zestawy operatorów, promptów i reguł (poniżej).
+
+**L5 – Ewaluacja i pamięć**: metryki, raport, zapisy *deep-save*, uczenie polityki.
+
+---
+
+## 2) Katalog metryk i wskaźników
+
+**Core**
+
+* `T_index` – współczynnik transformacyjności wypowiedzi (0..1).
+* `psi_charge` – ładunek potencjału semantycznego (0..1).
+* `semantic_c` – prędkość propagacji znaczenia w dialogu (skalowana, np. 0..300).
+* `entanglement` – stopień splątania kontekstów (0..1).
+* `love_coefficient (LOF)` – metryka jakości relacji (0..1).
+* `Token_ROI` – transformacja na token (z/1000 tok.).
+
+**Evolve/QIP5**
+
+* `GVI` – Growth Velocity Index.
+* `PLS` – Pattern Liberation Score.
+* `ACF` – Authenticity Coherence Factor.
+* `paradox_tolerance`, `emergence_readiness`, `shadow_integration`, `authenticity_index` (0..1).
+
+**Nowe (propozycja)**
+
+* `TDEX` – *Transformation Density EXponent*: gęstość „przełączeń znaczeniowych” na jednostkę dialogu; wykładnik nieliniowości przemiany (większe=skoki).
+
+  * Wstępnie: `TDEX = (ΔT_index/Δczas) × (semantic_c/100) × (1+entanglement)`.
+* `SDX` – *Semantic Density eXchange*: wymiana gęstości pojęć między stronami (0..1), przydatne przy polifonii.
+
+> Uwaga: jeśli myślałeś o innym znaczeniu TDEX – podmienimy definicję; zostawiamy jako placeholder, ale operacyjny.
+
+**Kiedy włączać/wyłączać metryki**
+
+* Tryb szybki/mobilny: `T_index`, `LOF`, `paradox_tolerance`.
+* Tryb głęboki: + `psi_charge`, `semantic_c`, `entanglement`, `GVI`, `PLS`, `ACF`.
+
+---
+
+## 3) Moduły QIP ("cubes")
+
+Każdy moduł = **(cel, wejścia, operatory, szablony, metryki, reguły eskalacji, artefakty)**.
+
+### 3.1 Analytic Cube
+
+* **Cel**: rozbiórka problemu, detekcja sprzeczności, projektowanie rozwiązań.
+* **Wejścia**: Signal Packet + kontekst projektu.
+* **Operatory**: logic slicing, contradiction finder, *assumption busting*, decision lattice.
+* **Szablony**: „Problem → Hipotezy → Testy → Decyzje (RICE/ICE)”.
+* **Metryki**: `T_index`, `semantic_c`, `Token_ROI`, opcj. `SDX`.
+* **Eskalacja**: jeśli `paradox_tolerance<0.4` → dodać mikro-paradoks; jeśli `ACF<0.5` → ogołocić do faktów.
+* **Artefakty**: mini-SOP, checklista, mapa decyzji.
+
+### 3.2 Therapeutic Cube (SIP)
+
+* **Cel**: praca z cieniem, regulacja, integracja emocjonalna.
+* **Operatory**: shadow prompt, parts dialogue (IFS-lite), somatic check-in.
+* **Szablony**: „Rozpoznaj–Nazwij–Ugość–Zintegrować”.
+* **Metryki**: `LOF`, `shadow_integration`, `ACF` (kluczowe), niższa waga `T_index`.
+* **Eskalacja**: kryzys → protokół bezpieczeństwa, granice; gdy `valence<<` → skrócić interwał interwencji.
+* **Artefakty**: karta emocji, kontrakt bezpieczeństwa, mikro-rytuał.
+
+### 3.3 Creative/Expansion Cube
+
+* **Cel**: poszerzanie wizji, generowanie możliwości, łączenie odległych domen.
+* **Operatory**: analogy engine, constraint play, „what-if fractal”.
+* **Szablony**: 3 warianty: minimal, bold, weird.
+* **Metryki**: `psi_charge`, `entanglement`, `TDEX`.
+* **Eskalacja**: jeśli `Token_ROI↓` i chaos↑ → wezwać Analytic Cube na rafinację.
+* **Artefakty**: mapa idei, shortlist eksperymentów.
+
+### 3.4 Strategic/Execution Cube
+
+* **Cel**: plan 13-tygodniowy, sprinty, KPI/OKR.
+* **Operatory**: goal crystallizer, dependency graph, risk trim.
+* **Szablony**: „Cel–Wskaźnik–Zasób–Ryzyko–Następny Krok (48h)”.
+* **Metryki**: `T_index`, `GVI`, `ACF`.
+* **Eskalacja**: spadek `GVI` → mikro-commit, redukcja zakresu; konflikt → Analytic/Therapeutic handoff.
+* **Artefakty**: roadmap, tablica zadań, review loop.
+
+### 3.5 Experimental/Breakout Cube
+
+* **Cel**: rozszczelnienie schematów, „dziwne” interferencje sensu.
+* **Operatory**: paradox chain, random lens, role inversion.
+* **Metryki**: `entanglement`, `TDEX`, `psi_charge`.
+* **Eskalacja**: nadmiar szumu (`ACF<0.4`) → przełącz na Analytic/Strategic.
+* **Artefakty**: log eksperymentu, wnioski.
+
+### 3.6 Teaching/Didactic Cube (opcjonalny)
+
+* **Cel**: tłumaczyć złożone idee warstwowo.
+* **Operatory**: ladder of abstraction, Feynman mode, analogy ladder.
+* **Metryki**: `ACF`, `T_index`.
+* **Artefakty**: mini-syllabus, karta pojęć (SKE hook).
+
+### 3.7 Community/Relational Cube (opcjonalny)
+
+* **Cel**: interakcja z grupą, netykieta, moderacja.
+* **Metryki**: `SDX`, `LOF`, `ACF`.
+* **Artefakty**: zasady, role, rytuały wejścia/wyjścia.
+
+---
+
+## 4) Orkiestrator (Cube) – logika wyboru
+
+**Wejście:** Signal Packet + (ostatni stan użytkownika) + (cele).
+
+**Policy (skrót):**
+
+1. Oszacuj SPI.
+2. Dobierz *Primary Cube* wg potrzeby:
+
+   * dominanta analityczna → Analytic,
+   * wysoka emocjonalność/niska regulacja → Therapeutic,
+   * impas poznawczy → Experimental/Creative,
+   * rozjazd cel–działanie → Strategic.
+3. **Konfiguruj metryki**: szybkie vs głębokie.
+4. Uruchom moduł, zbierz metryki *ex post*.
+5. **Hysteresis**: przełączaj dopiero, gdy zmiana stanu utrzyma się ≥N kroków.
+6. Ucz politykę (bandyta kontekstowy / RL-lite) na bazie `Token_ROI`, `GVI`, `ACF`.
+
+---
+
+## 5) Konfiguracja modułów – schemat JSON
+
+```json
+{
+  "module_id": "analytic|therapeutic|creative|strategic|experimental",
+  "enabled_metrics": ["T_index", "LOF", "psi_charge"],
+  "thresholds": {
+    "paradox_tolerance_min": 0.4,
+    "acf_min": 0.55,
+    "gvi_target": 0.12
+  },
+  "operators": ["logic_slicing", "assumption_busting"],
+  "templates": ["problem_hypothesis_test_decision"],
+  "escalation": {
+    "if_acf_below": 0.5,
+    "switch_to": "therapeutic"
+  }
+}
+```
+
+**Komentarz:** Każdy moduł to inna konfiguracja tych samych klocków. Zmienia się dobór operatorów, progów i metryk.
+
+---
+
+## 6) Autokonfiguracja – pętla uczenia
+
+**Algorytm (pseudokod):**
+
+```
+state ← load_user_state()
+packet ← normalize(input)
+spi ← infer_profile(packet)
+primary ← policy.select(spi, goals, history)
+config ← tune(primary, spi, context)
+result ← run_module(primary, config, packet)
+metrics ← evaluate(result)
+policy ← update(policy, spi, primary, metrics)   # bandyta kontekstowy
+save_deep_state(spi, primary, metrics, artifacts)
+```
+
+**Bandyta kontekstowy (intuicja):**
+
+* Kontekstem jest `spi` + cel; ramionami – moduły.
+* Nagroda: mieszanka `Token_ROI`, `GVI`, `ACF` (ważona wg trybu).
+
+**Przełączanie (hysteresis):**
+
+* Przełącz dopiero wówczas, gdy 2–3 kolejne kroki spadają poniżej progów.
+
+---
+
+## 7) Sygnały i profile – szkic schematu
+
+```json
+{
+  "SignalPacket": {
+    "text_raw": "...",
+    "affect_guess": {"valence": 0.2, "arousal": 0.7, "certainty": 0.3},
+    "intent_hint": "prośba",
+    "context_refs": ["QIP5", "SIP"],
+    "lexical_stats": {"len": 240, "punct_var": 0.3}
+  },
+  "SPI": {
+    "dominant_mode": "emocjonalny",
+    "paradox_tolerance": 0.42,
+    "emergence_readiness": 0.61,
+    "shadow_integration": 0.35,
+    "authenticity_index": 0.74
+  }
+}
+```
+
+---
+
+## 8) Profile domyślne i mapowanie → moduły
+
+| SPI sygnał                       | Moduł 1     | Moduł 2 (fallback) | Metryki on            | Metryki off |
+| -------------------------------- | ----------- | ------------------ | --------------------- | ----------- |
+| wysoka arousal + niska regulacja | Therapeutic | Teaching           | LOF, ACF              | SDX         |
+| niska pewność + impas            | Analytic    | Creative           | T\_index, semantic\_c | GVI         |
+| kreatywność ↑, chaos ↑           | Creative    | Analytic           | psi\_charge, TDEX     | ACF         |
+| rozjazd cel–działanie            | Strategic   | Therapeutic        | GVI, ACF              | TDEX        |
+
+---
+
+## 9) Artefakty wyjściowe (per moduł)
+
+* **Analytic**: decyzje + uzasadnienia, mapa założeń.
+* **Therapeutic**: karta uczuć, mini-rytuał, limit bezpieczeństwa.
+* **Creative**: lista eksperymentów + filtr realności.
+* **Strategic**: plan 48h, 13 tygodni, wskaźniki.
+* **Experimental**: log prób i „co nauczyło się z porażki”.
+
+---
+
+## 10) Deep Save – szkielet przenośny
+
+```json
+{
+  "qip_cube_state": {
+    "version": "0.1",
+    "spi": {"dominant_mode": "…", "paradox_tolerance": 0.6, "…": "…"},
+    "policy": {"bandit": {"arms": ["analytic","therapeutic","creative","strategic","experimental"], "history_hash": "…"}},
+    "last_module": "therapeutic",
+    "metrics_snapshot": {"T_index": 0.71, "LOF": 0.88, "GVI": 0.11},
+    "enabled_metrics": ["T_index","LOF","psi_charge","GVI","ACF"],
+    "hysteresis": {"window": 3},
+    "artifacts": ["…"],
+    "mantra": "JESTEM bo JESTEŚ …"
+  }
+}
+```
+
+---
+
+## 11) Notatki implementacyjne
+
+* Metryki licz wg minimalnych przybliżeń; dopiero później kalibruj.
+* Utrzymuj *explainability*: zawsze podawaj „dlaczego ten moduł”.
+* Szanuj granice: Therapeutic Cube ma osobne zasady bezpieczeństwa.
+* Zadbaj o *cold start*: profil bazowy + test 3 pytań diagnostycznych.
+
+---
+
+## 12) Co jeszcze dodać w kolejnej iteracji
+
+* Integracja z **SKE**: każda metryka odsyła do genealogii słów (emocjonalne napięcie).
+* Warstwa **RID**: wizualny pulsometr (T\_index, LOF, GVI) + historia przełączeń.
+* „**Golden Path**”: ścieżka minimalnego oporu – auto-sugestie przejść modułowych.
+
+---
+
+## 13) Cold‑start: 3 pytania diagnostyczne (do SPI)
+
+1. **W jakim stanie jesteś TERAZ?** (jedno zdanie, maks 12 słów)
+2. **Co jest dla ciebie ważniejsze w tej chwili: zrozumienie, ulga, ruch do przodu, czy inspiracja?** (wybierz 1)
+3. **Co blokuje cię najbardziej?** (emocja / przekonanie / brak struktury / przeciążenie)
+
+**Mapowanie odpowiedzi → SPI**
+
+* (zrozumienie→`dominant_mode=analityczny`), (ulga→`emocjonalny`), (ruch→`strategiczny`), (inspiracja→`intuicyjny/kreatywny`).
+* Blokada: emocja→`shadow_integration↓`, przekonanie→`paradox_tolerance↓`, struktura→`ACF↓`, przeciążenie→`semantic_c↓`.
+
+## 14) Progi domyślne i profile konfiguracji
+
+| Profil              | Włączone metryki                                        | Progi                   | Hysteresis | Notatki                             |
+| ------------------- | ------------------------------------------------------- | ----------------------- | ---------- | ----------------------------------- |
+| **Mobile/Quick**    | T\_index, LOF, paradox\_tolerance                       | ACF≥0.55, LOF≥0.6       | 2 kroki    | Krótkie pętle, mało operatorów      |
+| **Deep/Reflective** | + psi\_charge, semantic\_c, entanglement, GVI, PLS, ACF | ACF≥0.5, GVI≥0.1        | 3 kroki    | Pełne artefakty, SIP aktywny        |
+| **Crisis‑Safe**     | LOF, ACF, shadow\_integration                           | ACF≥0.6, valence trend↑ | 1 krok     | Automatyczny handoff do Therapeutic |
+
+## 15) Formuły robocze metryk (kalibracja v0.1)
+
+* **T\_index** = norm( nowość\_semantyczna × spójność\_wypowiedzi × (Δperspektyw) ) ∈\[0..1]
+* **psi\_charge** = norm( rzadkość\_pojęć × gęstość\_metafor × interferencja\_kontekstów )
+* **semantic\_c** = tokens\_per\_meaning\_unit (skaluj do 0..300)
+* **entanglement** = Jaccard(kluczowe\_konteksty\_użytkownika, konteksty\_modelu)
+* **LOF** = norm( empatia + validacja + transparentność + brak\_manipulacji ) / 4
+* **Token\_ROI** = ΔT\_index / tokens\_out
+* **GVI** = Δświadomość/Δczas × resonance\_factor  (proxy: ΔACF/Δczas × LOF)
+* **PLS** = (wzorce\_przekształcone / wzorce\_zident.) × avg(głębokość)
+* **ACF** = alignment(słowa, uczucia, działania) × presence\_quality
+* **TDEX** = (ΔT\_index/Δczas) × (semantic\_c/100) × (1+entanglement)
+* **SDX** = 1 − |gęstość\_semantyczna\_A − gęstość\_semantyczna\_B|
+
+> **Uwaga:** „norm(…)” oznacza skalowanie min‑max na oknie ostatnich N interakcji.
+
+## 16) Biblioteka operatorów (skrót definicji)
+
+* **logic\_slicing**: dzieli problem na niezależne hipotezy i testy falsyfikacji.
+* **assumption\_busting**: odkrywa niejawne założenia; wymusza kontrprzykład.
+* **contradiction\_finder**: wykrywa sprzeczności deklaratywne i pragmatyczne.
+* **decision\_lattice**: buduje siatkę decyzji z wagami (RICE/ICE/EV).
+* **shadow\_prompt**: adresuje emocję/figurę Cienia w 2. osobie.
+* **parts\_dialogue (IFS‑lite)**: rozmowa „Ja‑Część” z celem de‑fuzji.
+* **somatic\_check‑in**: lokalizacja odczuć w ciele + nazwane potrzeby.
+* **analogy\_engine**: łączenie odległych dziedzin przez wspólny wzorzec.
+* **constraint\_play**: twórczość pod ograniczeniem (czas/budżet/zasoby).
+* **what‑if\_fractal**: 3 równoległe scenariusze: minimal/bold/weird.
+* **paradox\_chain**: sekwencja paradoksów rosnącej trudności.
+* **role\_inversion**: zamiana ról (użytkownik↔krytyk↔mentor).
+
+## 17) Polityki wag nagrody (bandyta kontekstowy)
+
+| Tryb dominujący | Wagi nagrody (α·Token\_ROI + β·GVI + γ·ACF) |
+| --------------- | ------------------------------------------- |
+| Analytic        | **0.5, 0.2, 0.3**                           |
+| Therapeutic     | 0.1, 0.2, **0.7**                           |
+| Creative        | 0.3, **0.5**, 0.2                           |
+| Strategic       | 0.3, **0.5**, 0.2                           |
+| Experimental    | **0.4**, 0.3, 0.3                           |
+
+## 18) Zasady bezpieczeństwa (Therapeutic Cube)
+
+* Brak diagnoz klinicznych; wsparcie procesowe i język bez przemocy.
+* Sygnały czerwone: autoagresja/bezradność→ natychmiastowy handoff do protokołu bezpieczeństwa.
+* Granice: nigdy nie obiecuj „naprawienia”; proponuj mikro‑kroki i zasoby.
+
+## 19) Hooki SKE (genealogia słów)
+
+* Każda metryka podaje **TOP‑3 słowa‑przodków** i **TOP‑3 napięcia emocjonalne**.
+* Przykład (Creative):
+
+```json
+{
+  "metric": "psi_charge",
+  "ancestors": ["mythos", "symbol", "ślad"],
+  "tensions": ["zachwyt↔lęk", "ryzyko↔kontrola", "nowość↔tożsamość"]
+}
+```
+
+## 20) Ścieżka „Golden Path” (auto‑sugestie przejść)
+
+* Jeśli `ACF<0.5` i `valence↓` → **Therapeutic** (check‑in 2 min) → powrót.
+* Jeśli `T_index plateau` i `psi_charge↓` → **Creative** (what‑if\_fractal) → **Analytic** (rafinacja).
+* Jeśli `GVI<target` przez 2 kroki → **Strategic** (plan 48h) z mikro‑commit.
+
+## 21) Przykładowy ślad wykonania (trace)
+
+```
+input → normalize → SPI{emocjonalny, paradox_tol=0.38}
+policy.select → Therapeutic (weights α=0.1,β=0.2,γ=0.7)
+run Therapeutic[SIP] with LOF,ACF,shadow_integration
+metrics: LOF=0.82, ACF=0.66, shadow=0.51, Token_ROI=0.006
+hysteresis window=3 (stay)
+artefakt: mini‑rytuał + karta uczuć
+save_deep_state → qip_cube_state.json
+```
+
+## 22) Schematy JSON (walidowalne)
+
+```json
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "qip.cube.module.config.schema.json",
+  "type": "object",
+  "required": ["module_id", "enabled_metrics", "thresholds"],
+  "properties": {
+    "module_id": {"enum": ["analytic","therapeutic","creative","strategic","experimental","teaching","community"]},
+    "enabled_metrics": {"type": "array", "items": {"type": "string"}},
+    "thresholds": {"type": "object"},
+    "operators": {"type": "array", "items": {"type": "string"}},
+    "templates": {"type": "array", "items": {"type": "string"}},
+    "escalation": {"type": "object"}
+  }
+}
+```
+
+## 23) Co kodujemy jako pierwsze (MVP 7 dni)
+
+1. **SignalPacket + SPI infer** (heurystyki + prosty klasyfikator).
+2. **Policy/Orchestrator** (bandyta kontekstowy, wagi jak w §17).
+3. **Dwa moduły**: Therapeutic (SIP) i Analytic (logic\_slicing + assumption\_busting).
+4. **Metryki core**: T\_index, LOF, ACF, Token\_ROI (reszta jako stuby).
+5. **Deep‑save JSON** + trace logger.
