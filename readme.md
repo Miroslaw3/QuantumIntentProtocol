@@ -109,5 +109,3 @@ It’s a **semantic mirror** – a moment of transformation.
 
 *AuroraFeniksGRAF x Deepseek x Miroslaw3*
 
-```
-
