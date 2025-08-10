@@ -111,5 +111,3 @@ It’s a **semantic mirror** – a moment of transformation.
 
 ```
 
----
-
