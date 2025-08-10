@@ -1,9 +1,3 @@
-Świetnie, to zrobię Ci rozszerzoną wersję tak, żeby zachować Twój styl, ale dodać **Quickstart**, **diagram** i wyraźne linki.
-Poniżej masz gotowy draft, który możesz wkleić do `README.md` w repo.
-
----
-
-````markdown
 # Quantum Intent Protocol (QIP) – Manifest
 
 **Quantum Intent Protocol (QIP)** is an open-source framework to measure the semantic potential of language and enable intentional AI-human communication.  
